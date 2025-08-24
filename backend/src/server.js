@@ -11,8 +11,7 @@ const server = express()
 
 server.use(cors({
     origin:[
-        process.env.ALLOW_ORIGIN || "http://localhost:5173",
-        "https://bookmyshoot.onrender.com"
+        process.env.ALLOW_ORIGIN || "http://localhost:5173","https://book-my-shoot.vercel.app"
     ],
     credentials:true
 }))
