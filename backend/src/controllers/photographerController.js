@@ -74,7 +74,9 @@ const loginPhotographer = asyncHandler(async (req,res)=>{
    }
 
    console.log("Login Request Data:", req.body);
-   console.log("Email received:", email);   
+
+    console.log("Email received:", email);
+
 
    const photographer = await Photographer.findOne({    
       email:email
