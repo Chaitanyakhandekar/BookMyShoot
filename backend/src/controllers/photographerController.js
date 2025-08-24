@@ -78,41 +78,43 @@ const loginPhotographer = asyncHandler(async (req,res)=>{
     console.log("Email received:", email);
 
 
-   const photographer = await Photographer.findOne({    
-      email:req.body.email.trim()
-   })
 
-   console.log("Photographer found:", photographer);
+   // const photographer = await Photographer.findOne({    
+   //    email:req.body.email.trim()
+   // })
 
-   if(!photographer){
-      throw new ApiError(401, "Photographer with given data doesn't exist")
-   }
 
-   if(!password){
-      throw new ApiError(400,"password is required!")
-   }
+   // console.log("Photographer found:", photographer);
 
-   const isValidPassword = await photographer.isCorrectPassword(password)
+   // if(!photographer){
+   //    throw new ApiError(401, "Photographer with given data doesn't exist")
+   // }
 
-   if(!isValidPassword){
-      throw new ApiError(401,"Invalid photographer credentials")
-   }
+   // if(!password){
+   //    throw new ApiError(400,"password is required!")
+   // }
 
-   const {accessToken , refreshToken} = await generateAccessAndRefreshTokenP(photographer._id)
+   // const isValidPassword = await photographer.isCorrectPassword(password)
 
-   const options = {
-      httpOnly:true,
-      secure:true,
-      sameSite:process.env.NODE_ENV === "production" ? "none" : "lax"
-   }
+   // if(!isValidPassword){
+   //    throw new ApiError(401,"Invalid photographer credentials")
+   // }
+
+   // const {accessToken , refreshToken} = await generateAccessAndRefreshTokenP(photographer._id)
+
+   // const options = {
+   //    httpOnly:true,
+   //    secure:true,
+   //    sameSite:process.env.NODE_ENV === "production" ? "none" : "lax"
+   // }
 
    return res
       .status(200)
-      .cookie("accessToken" , accessToken , options)
-      .cookie("refreshToken", refreshToken , options)
+      // .cookie("accessToken" , accessToken , options)
+      // .cookie("refreshToken", refreshToken , options)
       .json(
          new ApiResponse(200, {
-            id: photographer._id,
+            // id: photographer._id,
             email: photographer.email,
          },"Login Successful")
       )

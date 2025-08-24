@@ -200,7 +200,7 @@ function UserTypeSelection({ userType, setUserType, setCurrentPage }) {
             className={`bg-white rounded-2xl p-8 shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all cursor-pointer border-4 ${
               userType === 'client' ? 'border-purple-500' : 'border-transparent'
             }`}
-            onClick={() => setUserType('client')}
+            onClick={() => setUserType('users')}
           >
             <div className="text-center">
               <div className="bg-gradient-to-r from-blue-500 to-purple-600 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6">
@@ -707,7 +707,7 @@ export default function AuthPages() {
     try {
       console.log("Login Data:", formData);
       const response = await axios.post(
-        `${import.meta.env.VITE_ENV === "development" ? import.meta.env.VITE_LOCAL_URL : import.meta.env.VITE_SERVER_URL}/api/v1/photographers/login`,
+        `${import.meta.env.VITE_ENV === "development" ? import.meta.env.VITE_LOCAL_URL : import.meta.env.VITE_SERVER_URL}/api/v1/${userType === 'client' ? 'users' : 'photographers'}/login`,
         {
           email: formData.email,
           password: formData.password
