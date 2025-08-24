@@ -1,9 +1,23 @@
 import React, { useState } from 'react';
 import { Camera, Video, Star, Users, Calendar, Shield, Search, MapPin, Filter, ChevronRight, Play, Award, Clock, Heart } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    const res =await axios.get(`${import.meta.env.VITE_ENV === "production" ? import.meta.env.VITE_SERVER_URL : import.meta.env.VITE_LOCAL_URL}/api/v1/users/logout`, {
+      withCredentials: true
+    });
+
+    console.log("Logout Response:", res.data);
+    setIsLoggedIn(false);
+    // navigate('/');
+  };
 
   const categories = [
     { id: 'all', name: 'All Services', icon: Camera },
@@ -12,6 +26,22 @@ export default function Home() {
     { id: 'corporate', name: 'Corporate', icon: Award },
     { id: 'fashion', name: 'Fashion', icon: Star },
   ];
+
+  React.useEffect(() => {
+    const authCheck = async () => {
+      const res = await axios.get(`${import.meta.env.VITE_ENV === "production" ? import.meta.env.VITE_SERVER_URL : import.meta.env.VITE_LOCAL_URL}/api/v1/users/is-logged-in`, {
+        withCredentials: true
+      });
+      const data = await res.data;
+      if(data.success){
+        setIsLoggedIn(true);
+      }
+      console.log("is logged in", data);
+      // Handle the fetched data
+    };
+
+    authCheck();
+  }, []);
 
   const featuredPhotographers = [
     {
@@ -73,11 +103,23 @@ export default function Home() {
             
             <div className="hidden md:flex items-center space-x-8">
               <a href="#" className="text-gray-700 hover:text-purple-600 transition-colors">Browse</a>
-              <a href="#" className="text-gray-700 hover:text-purple-600 transition-colors">How it Works</a>
-              <a href="#" className="text-gray-700 hover:text-purple-600 transition-colors">Join as Pro</a>
-              <button className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors">
-                Sign In
+             
+              {
+                isLoggedIn && <button 
+              onClick={handleLogout}
+              className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors">
+                Logout
               </button>
+              }
+
+              {
+                !isLoggedIn && <button 
+                onClick={() => navigate('/auth/*')}
+                className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-lg hover:shadow-lg transform hover:-translate-y-0.5 transition-all">
+                  Login
+                </button>
+              }
+
               <button className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-lg hover:shadow-lg transform hover:-translate-y-0.5 transition-all">
                 Get Started
               </button>

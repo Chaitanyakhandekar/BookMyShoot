@@ -14,7 +14,8 @@ import
     getUserChannelProfile,
     getUserWatchHistory,
     verifyUser,
-    isVerifiedUser
+    isVerifiedUser,
+    isUserLoggedIn
 } from '../controllers/user.controller.js';
 
 import {upload} from '../middlewares/multer.middleware.js'
@@ -29,7 +30,8 @@ router.route("/login").post(loginUser)
 
 // secured Routes
 
-router.route("/logout").post(verifyJWT, logoutUser)
+router.route("/logout").get(verifyJWT, logoutUser)
+router.route("/is-logged-in").get(verifyJWT, isUserLoggedIn)
 router.route("/refresh-token").post(refreshAccessToken)
 router.route("/change-password").post(verifyJWT,changeCurrentPassword)
 router.route("/current-user").get(verifyJWT,getCurrentUser)

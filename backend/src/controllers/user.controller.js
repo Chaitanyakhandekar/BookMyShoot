@@ -594,6 +594,14 @@ const getUserWatchHistory = asyncHandler(async (req,res)=>{       // used verify
                )
 })
 
+const isUserLoggedIn = asyncHandler(async (req,res)=>{       // used verifyJWT middleware
+   return res
+            .status(200)
+            .json(
+               new ApiResponse(200,true,"User is logged in")
+            )
+}) 
+
 export { 
    registerUser,
    loginUser,
@@ -607,5 +615,6 @@ export {
    getUserChannelProfile,
    getUserWatchHistory,
    verifyUser,
-   isVerifiedUser
+   isVerifiedUser,
+   isUserLoggedIn
 };
