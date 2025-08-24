@@ -324,6 +324,11 @@ function SignupPage({ formData, handleInputChange, showPassword, setShowPassword
 
   const navigate = useNavigate();
 
+  const handleSignup = async () => {
+    const res = await axios.post(`${import.meta.env.VITE_ENV === "production" ? import.meta.env.VITE_SERVER_URL : import.meta.env.VITE_LOCAL_URL}/api/v1/photographers/register`, formData);
+    console.log("Signup Response:", res.data);
+  };
+
   const testimonials = [
     {
       name: "Sneha Sharma",
@@ -645,7 +650,7 @@ function SignupPage({ formData, handleInputChange, showPassword, setShowPassword
             </div>
 
             <button
-              type="submit"
+              onClick={handleSignup}
               className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 rounded-lg font-semibold hover:shadow-lg transform hover:-translate-y-0.5 transition-all"
             >
               Create {userType} account
