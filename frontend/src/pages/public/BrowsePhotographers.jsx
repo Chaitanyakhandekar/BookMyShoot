@@ -15,6 +15,7 @@ import {
   ChevronDown,
   X
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export default function BrowsePhotographers() {
   const [photographers, setPhotographers] = useState([]);
@@ -22,6 +23,8 @@ export default function BrowsePhotographers() {
   const [loading, setLoading] = useState(true);
   const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
   const [showFilters, setShowFilters] = useState(false);
+
+  const navigate = useNavigate();
   
   // Filter states
   const [filters, setFilters] = useState({
@@ -426,7 +429,10 @@ export default function BrowsePhotographers() {
           </div>
 
           <button 
-            onClick={() => navigateToPhotographer(photographer.id)}
+            onClick={() => {
+              navigate(`/photographers/id`);
+              localStorage.setItem('photographer', JSON.stringify(photographer));
+            }}
             className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-2 px-4 rounded-lg hover:shadow-lg transform hover:-translate-y-0.5 transition-all"
           >
             View Profile & Book
