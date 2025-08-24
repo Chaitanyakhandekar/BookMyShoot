@@ -30,33 +30,74 @@ const PhotographerProfile = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [bookingStep, setBookingStep] = useState(1);
+  const [photographers, setPhotographers] = useState(null);
+
+  React.useEffect(()=>{
+    const fetchPhotographers = async () => {
+      let p = localStorage.getItem('photographers');
+      setPhotographers(JSON.parse(p));
+    };
+
+    fetchPhotographers();
+  },[])
 
   const photographer = {
-    name: "John Smith",
-    location: "New York, USA",
-    rating: 4.9,
-    reviews: 128,
-    experience: "10+ years",
-    priceRange: "$150 - $500",
-    languages: ["English", "Spanish"],
-    specialties: ["Weddings", "Portraits", "Events", "Fashion"],
-    packages: [
-      { name: "Basic", price: "$150", duration: "1 hour" },
-      { name: "Standard", price: "$300", duration: "3 hours" },
-      { name: "Premium", price: "$500", duration: "Full day" },
+    name: photographers ? photographers[0].name : "John Doe",
+    location: photographers ? photographers[0].location : "Unknown",
+    rating: photographers ? photographers[0].rating : 0,
+    reviews: photographers ? photographers[0].reviews : 0,
+    experience: photographers ? photographers[0].experience : "0 years",
+    priceRange: photographers ? photographers[0].priceRange : "$0 - $0",
+    languages: photographers ? photographers[0].languages : [
+      "English",
+      "Spanish",
+      "French"
     ],
-    portfolio: [
-      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
-      "https://images.unsplash.com/photo-1511285560929-80b456fea0bc",
-      "https://images.unsplash.com/photo-1469594292607-7bd90f8d3ba4",
-      "https://images.unsplash.com/photo-1497215842964-222b430dc094",
-      "https://images.unsplash.com/photo-1520880867055-1e30d1cb001c",
-      "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f",
+    specialties: photographers ? photographers[0].specialties : [
+      "Wedding",
+      "Portrait",
+      "Fashion"
     ],
-    achievements: [
+    packages: photographers ? photographers[0].packages : [
+      {
+        name: "Basic Package",
+        price: "$1000",
+        features: [
+          "5 hours of coverage",
+          "1 photographer",
+          "Online gallery"
+        ]
+      },
+      {
+        name: "Standard Package",
+        price: "$2000",
+        features: [
+          "10 hours of coverage",
+          "2 photographers",
+          "Online gallery",
+          "USB drive with edited photos"
+        ]
+      },
+      {
+        name: "Premium Package",
+        price: "$3000",
+        features: [
+          "All-day coverage",
+          "2 photographers",
+          "Online gallery",
+          "USB drive with edited photos",
+          "Pre-wedding photoshoot"
+        ]
+      }
+    ],
+    portfolio: photographers ? photographers[0].portfolio : [
+      "https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=400&h=300&fit=crop"
+    ],
+    achievements: photographers ? photographers[0].achievements : [
       "Best Wedding Photographer 2023",
       "Featured in National Geographic",
-      "500+ Successful Events",
+      "500+ Successful Events"
     ],
   };
 

@@ -102,8 +102,10 @@ export default function Home() {
             </div>
             
             <div className="hidden md:flex items-center space-x-8">
-              <a href="#" className="text-gray-700 hover:text-purple-600 transition-colors">Browse</a>
-             
+              <div 
+              onClick={() => navigate('/photographers')}
+              className="text-gray-700 hover:text-purple-600 transition-colors">Browse</div>
+
               {
                 isLoggedIn && <button 
               onClick={handleLogout}
@@ -266,18 +268,26 @@ export default function Home() {
                   
                   <div className="flex items-center justify-between">
                     <div className="text-2xl font-bold text-gray-900">{pro.price}<span className="text-sm text-gray-500">/day</span></div>
-                    <button className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-2 rounded-lg hover:shadow-lg transform hover:-translate-y-0.5 transition-all">
+                    {/* <button className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-2 rounded-lg hover:shadow-lg transform hover:-translate-y-0.5 transition-all">
                       View Profile
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               </div>
             ))}
           </div>
         </div>
+
+        <div className="py-20 bg-gray-50 w-full flex justify-center">
+          
+          <button
+          onClick={() => navigate('/photographers')}
+          className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-2 rounded-lg hover:shadow-lg transform hover:-translate-y-0.5 transition-all text-2xl font-bold p-3 font-mono">
+            Browse Photographers
+          </button>
+        </div>
       </section>
 
-      {/* How It Works */}
       
 
       {/* Features */}
