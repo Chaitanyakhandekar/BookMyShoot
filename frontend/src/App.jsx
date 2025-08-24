@@ -7,6 +7,7 @@ import AuthPages from './pages/auth/Login'
 import { Route } from 'react-router-dom'
 import { Routes } from 'react-router-dom'
 import BrowsePhotographers from './pages/public/BrowsePhotographers'
+import PhotographerProfile from './pages/public/PhotographerProfile'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -16,6 +17,7 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/auth/*" element={<AuthPages />} />
       <Route path="/photographers" element={<BrowsePhotographers />} />
+      <Route path="/photographers/id" element={<PhotographerProfile />} />
     </Routes>
   )
 }
