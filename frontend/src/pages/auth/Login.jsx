@@ -716,7 +716,7 @@ export default function AuthPages() {
         }
       );
 
-      const data = await response.data;
+      const data = response.data;
       console.log("Login Info", data);
 
       if (!response.status || response.status >= 400) {
