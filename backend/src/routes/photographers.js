@@ -1,27 +1,16 @@
-const express = require('express');
-const { protect, isPhotographerOrAdmin } = require('../middleware/auth');
-const {
-  getPhotographers,
-  getPhotographer,
-  createPhotographer,
-  updatePhotographer,
-  deletePhotographer,
-  getMyProfile
-} = require('../controllers/photographerController');
+import { Router } from "express";
+import {
+  registerPhotographer,
+  loginPhotographer,
+  logoutPhotographer
+} from "../controllers/photographerController.js";
+import { verifyJWTPhotographer } from "../middlewares/authenticatePhotographer.middleware.js";
 
-const router = express.Router();
+const router = Router();
 
-// Public routes
-router.get('/', getPhotographers);
-router.get('/:id', getPhotographer);
+router.post('/register', registerPhotographer);
+router.post('/login', loginPhotographer);
+router.get('/logout',verifyJWTPhotographer, logoutPhotographer);
 
-// Protected routes
-router.use(protect);
 
-// Photographer routes
-router.get('/me/profile', isPhotographerOrAdmin, getMyProfile);
-router.post('/', isPhotographerOrAdmin, createPhotographer);
-router.put('/:id', isPhotographerOrAdmin, updatePhotographer);
-router.delete('/:id', isPhotographerOrAdmin, deletePhotographer);
-
-module.exports = router;
+export default router;

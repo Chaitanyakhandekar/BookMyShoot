@@ -1,12 +1,12 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+import mongoose from "mongoose";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const photographerSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    
   },
   fullName: {
     type: String,
@@ -30,11 +30,11 @@ const photographerSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please provide a password'],
     minlength: [6, 'Password must be at least 6 characters long'],
-    select: false
+
   },
   businessName: {
     type: String,
-    required: [true, 'Please provide a business name'],
+   
     trim: true
   },
   specialization: {
@@ -47,13 +47,7 @@ const photographerSchema = new mongoose.Schema({
     maxlength: 1000
   },
   location: {
-    city: { type: String, required: true },
-    state: { type: String, required: true },
-    country: { type: String, required: true },
-    coordinates: {
-      latitude: Number,
-      longitude: Number
-    }
+    type:String
   },
   portfolio: [{
     title: String,
@@ -191,4 +185,4 @@ photographerSchema.methods.generateVerificationToken = function () {
   }
 };
 
-module.exports = mongoose.model('Photographer', photographerSchema);
+export const Photographer = mongoose.model('Photographer', photographerSchema);

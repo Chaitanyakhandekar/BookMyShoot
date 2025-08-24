@@ -26,9 +26,12 @@ server.use(express.static("public"))
 
 import testRouter from "./routes/test.route.js"
 import userRouter from "./routes/user.route.js";
+import photographerRouter from "./routes/photographers.js"
 
 server.use("/api/v1/users" , userRouter)
 
 server.use("/api/v1/tests" , testRouter)
+
+server.use("/api/v1/photographers" , photographerRouter)
 
 export default server;
