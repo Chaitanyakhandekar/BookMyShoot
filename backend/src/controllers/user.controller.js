@@ -269,7 +269,8 @@ const logoutUser = asyncHandler(async (req,res)=>{
 
    const options = {
       httpOnly:true,
-      secure:true
+      secure:true,
+      sameSite:process.env.NODE_ENV === "production" ? "none" : "lax"
    }
 
    const user = await User.findById(req.user._id)
