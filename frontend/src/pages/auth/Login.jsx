@@ -705,8 +705,9 @@ export default function AuthPages() {
     e.preventDefault();
 
     try {
+      console.log("Login Data:", formData);
       const response = await axios.post(
-        `${import.meta.env.VITE_ENV === "development" ? import.meta.env.VITE_LOCAL_URL : import.meta.env.VITE_SERVER_URL}/api/v1/photographers/login`,
+        `${import.meta.env.VITE_ENV === "development" ? import.meta.env.VITE_LOCAL_URL : import.meta.env.VITE_SERVER_URL}/api/v1/users/login`,
         {
           email: formData.email,
           password: formData.password
