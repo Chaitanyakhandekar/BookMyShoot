@@ -79,7 +79,7 @@ const loginPhotographer = asyncHandler(async (req,res)=>{
 
 
    const photographer = await Photographer.findOne({    
-      email:email
+      email:req.body.email
    })
 
    console.log("Photographer found:", photographer);
