@@ -74,10 +74,13 @@ const loginPhotographer = asyncHandler(async (req,res)=>{
    }
 
    console.log("Login Request Data:", req.body);
+   console.log("Email received:", email);   
 
-   const photographer = await Photographer.findOne({
+   const photographer = await Photographer.findOne({    
       email:email
    })
+
+   console.log("Photographer found:", photographer);
 
    if(!photographer){
       throw new ApiError(401, "Photographer with given data doesn't exist")
