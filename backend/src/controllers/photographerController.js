@@ -73,12 +73,14 @@ const loginPhotographer = asyncHandler(async (req,res)=>{
       throw new ApiError(400 , "email is required!")
    }
 
+   console.log("Login Request Data:", req.body);
+
    const photographer = await Photographer.findOne({
       email
    })
 
    if(!photographer){
-      throw new ApiError(401, "User with give data doesnt exists")
+      throw new ApiError(401, "Photographer with given data doesn't exist")
    }
 
    if(!password){
@@ -88,7 +90,7 @@ const loginPhotographer = asyncHandler(async (req,res)=>{
    const isValidPassword = await photographer.isCorrectPassword(password)
 
    if(!isValidPassword){
-      throw new ApiError(401,"Invalid user credantials")
+      throw new ApiError(401,"Invalid photographer credentials")
    }
 
    const {accessToken , refreshToken} = await generateAccessAndRefreshTokenP(photographer._id)

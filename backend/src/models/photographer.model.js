@@ -34,7 +34,7 @@ const photographerSchema = new mongoose.Schema({
   },
   businessName: {
     type: String,
-   
+  
     trim: true
   },
   specialization: {
