@@ -44,7 +44,11 @@ const registerUser = asyncHandler(async (req, res,next) => {
 
     
     req.newUser = newUser;
-    next();
+
+    return res
+    .status(201).json(
+         new ApiResponse(201, "User registered successfully", newUser)
+    )
 
 })
 
@@ -239,22 +243,21 @@ const loginUser = asyncHandler(async (req,res)=>{
 
    const options = {
       httpOnly:true,
-      secure:true
+      secure:true,
+      sameSite:process.env.NODE_ENV === "production" ? "none" : "lax"
    }
 
    return res
       .status(200)
       .cookie("accessToken" , accessToken , options)
       .cookie("refreshToken", refreshToken , options)
-      .json({
-         user:{            // if using mobile application
-            id:user._id,
-            username:user.username,
-            email:user.email
-         },
-         accessToken,
-         refreshToken
-      })
+      .json(
+         new ApiResponse(200, {
+            id: user._id,
+            username: user.username,
+            email: user.email,
+         },"Login Successful")
+      )
 })
 
 const logoutUser = asyncHandler(async (req,res)=>{

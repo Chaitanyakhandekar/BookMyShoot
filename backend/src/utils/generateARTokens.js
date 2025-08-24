@@ -10,7 +10,7 @@ export const generateAccessAndRefreshToken = async (userId)=>{
     }
 
     const accessToken = await user.generateAccessToken()
-    const refreshToken = await user.generateRefreshTokens()
+    const refreshToken = await user.generateRefreshToken()
 
     user.refreshToken = refreshToken
 

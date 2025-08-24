@@ -1,10 +1,36 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const photographerSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
+  },
+  fullName: {
+    type: String,
+    required: [true, 'Please provide your full name'],
+    trim: true
+  },
+  phone: {
+    type: String,
+    required: [true, 'Please provide your phone number'],
+    unique: true,
+    trim: true
+  },
+  email: {
+    type: String,
+    required: [true, 'Please provide your email'],
+    unique: true,
+    lowercase: true,
+    trim: true
+  },
+  password: {
+    type: String,
+    required: [true, 'Please provide a password'],
+    minlength: [6, 'Password must be at least 6 characters long'],
+    select: false
   },
   businessName: {
     type: String,
@@ -103,21 +129,66 @@ const photographerSchema = new mongoose.Schema({
   timestamps: true
 });
 
-// Update rating when reviews change
-photographerSchema.methods.updateRating = async function() {
-  const Review = mongoose.model('Review');
-  const reviews = await Review.find({ photographer: this._id });
-  
-  if (reviews.length > 0) {
-    const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
-    this.rating.average = totalRating / reviews.length;
-    this.rating.count = reviews.length;
-  } else {
-    this.rating.average = 0;
-    this.rating.count = 0;
+
+// 🔹 Hash password before saving
+photographerSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next();
+  this.password = await bcrypt.hash(this.password, 10);
+  next();
+});
+
+// 🔹 Compare password
+photographerSchema.methods.isCorrectPassword = async function (password) {
+  return await bcrypt.compare(password, this.password);
+};
+
+// 🔹 Generate Access Token
+photographerSchema.methods.generateAccessToken = function () {
+  try {
+    return jwt.sign(
+      {
+        id: this._id,
+        role: 'photographer', // 👈 fixed role for photographers
+        isActive: this.isActive
+      },
+      process.env.ACCESS_TOKEN_SECRET,
+      {
+        expiresIn: process.env.ACCESS_TOKEN_EXPIRY
+      }
+    );
+  } catch (error) {
+    return error.message;
   }
-  
-  await this.save();
+};
+
+// 🔹 Generate Refresh Token
+photographerSchema.methods.generateRefreshToken = function () {
+  try {
+    return jwt.sign(
+      { id: this._id },
+      process.env.REFRESH_TOKEN_SECRET,
+      {
+        expiresIn: process.env.REFRESH_TOKEN_EXPIRY
+      }
+    );
+  } catch (error) {
+    return error.message;
+  }
+};
+
+// 🔹 Generate Verification Token
+photographerSchema.methods.generateVerificationToken = function () {
+  try {
+    return jwt.sign(
+      { id: this._id },
+      process.env.VERIFICATION_SECRET,
+      {
+        expiresIn: process.env.VERIFICATION_EXPIRY
+      }
+    );
+  } catch (error) {
+    return error.message;
+  }
 };
 
 module.exports = mongoose.model('Photographer', photographerSchema);
