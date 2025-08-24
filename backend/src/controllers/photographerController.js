@@ -76,7 +76,7 @@ const loginPhotographer = asyncHandler(async (req,res)=>{
    console.log("Login Request Data:", req.body);
 
    const photographer = await Photographer.findOne({
-      email:"user1@gmail.com"
+      email:email
    })
 
    if(!photographer){
