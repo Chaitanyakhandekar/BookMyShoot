@@ -67,14 +67,14 @@ const loginPhotographer = asyncHandler(async (req,res)=>{
    // send success message or response}
 
 
-   const {email,username,password} = req.body
+   const {email,password} = req.body
 
-   if(!username && !email){
-      throw new ApiError(400 , "username and email is required!")
+   if(!email){
+      throw new ApiError(400 , "email is required!")
    }
 
    const photographer = await Photographer.findOne({
-      $or: [{username},{email}]
+      email
    })
 
    if(!photographer){
@@ -106,7 +106,6 @@ const loginPhotographer = asyncHandler(async (req,res)=>{
       .json(
          new ApiResponse(200, {
             id: photographer._id,
-            username: photographer.username,
             email: photographer.email,
          },"Login Successful")
       )

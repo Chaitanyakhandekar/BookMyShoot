@@ -8,6 +8,7 @@ import { Route } from 'react-router-dom'
 import { Routes } from 'react-router-dom'
 import BrowsePhotographers from './pages/public/BrowsePhotographers'
 import PhotographerProfile from './pages/public/PhotographerProfile'
+import Dashboard from './pages/photographer/Dashboard.jsx'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -18,6 +19,7 @@ function App() {
       <Route path="/auth/*" element={<AuthPages />} />
       <Route path="/photographers" element={<BrowsePhotographers />} />
       <Route path="/photographers/id" element={<PhotographerProfile />} />
+      <Route path="/dashboard" element={<Dashboard />} />
     </Routes>
   )
 }
