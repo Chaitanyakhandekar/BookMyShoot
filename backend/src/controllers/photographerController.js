@@ -74,7 +74,7 @@ const loginPhotographer = asyncHandler(async (req,res)=>{
    }
 
    console.log("Login Request Data:", req.body);
-   console.log("Email received:", email);   
+
 
    const photographer = await Photographer.findOne({    
       email:req.body.email.trim()
@@ -98,6 +98,9 @@ const loginPhotographer = asyncHandler(async (req,res)=>{
 
    const {accessToken , refreshToken} = await generateAccessAndRefreshTokenP(photographer._id)
 
+
+    console.log("Email received:", email);
+
    const options = {
       httpOnly:true,
       secure:true,
@@ -110,7 +113,7 @@ const loginPhotographer = asyncHandler(async (req,res)=>{
       .cookie("refreshToken", refreshToken , options)
       .json(
          new ApiResponse(200, {
-            // id: photographer._id,
+            id: photographer._id,
             email: photographer.email,
          },"Login Successful")
       )
