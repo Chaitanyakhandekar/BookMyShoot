@@ -198,7 +198,7 @@ function UserTypeSelection({ userType, setUserType, setCurrentPage }) {
           {/* Client Card */}
           <div
             className={`bg-white rounded-2xl p-8 shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all cursor-pointer border-4 ${
-              userType === 'client' ? 'border-purple-500' : 'border-transparent'
+              userType === 'users' ? 'border-purple-500' : 'border-transparent'
             }`}
             onClick={() => setUserType('users')}
           >
@@ -228,7 +228,7 @@ function UserTypeSelection({ userType, setUserType, setCurrentPage }) {
                   Leave reviews & ratings
                 </li>
               </ul>
-              {userType === 'client' && (
+              {userType === 'users' && (
                 <div className="bg-purple-100 text-purple-700 px-4 py-2 rounded-lg text-sm font-medium">
                   Selected
                 </div>
@@ -239,9 +239,9 @@ function UserTypeSelection({ userType, setUserType, setCurrentPage }) {
           {/* Professional Card */}
           <div
             className={`bg-white rounded-2xl p-8 shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all cursor-pointer border-4 ${
-              userType === 'professional' ? 'border-purple-500' : 'border-transparent'
+              userType === 'photographers' ? 'border-purple-500' : 'border-transparent'
             }`}
-            onClick={() => setUserType('professional')}
+            onClick={() => setUserType('photographers')}
           >
             <div className="text-center">
               <div className="bg-gradient-to-r from-purple-600 to-pink-600 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6">
@@ -269,7 +269,7 @@ function UserTypeSelection({ userType, setUserType, setCurrentPage }) {
                   Build your reputation
                 </li>
               </ul>
-              {userType === 'professional' && (
+              {userType === 'photographers' && (
                 <div className="bg-purple-100 text-purple-700 px-4 py-2 rounded-lg text-sm font-medium">
                   Selected
                 </div>
@@ -289,7 +289,7 @@ function UserTypeSelection({ userType, setUserType, setCurrentPage }) {
                 : 'bg-gray-300 text-gray-500 cursor-not-allowed'
             }`}
           >
-            Continue with {userType === 'client' ? 'Client' : userType === 'professional' ? 'Professional' : 'Selection'}
+            Continue with {userType === 'users' ? 'users' : userType === 'photographers' ? 'photographers' : 'Selection'}
           </button>
 
           <div>
@@ -366,10 +366,10 @@ function SignupPage({ formData, handleInputChange, showPassword, setShowPassword
           </button>
 
           <h3 className="text-4xl font-bold mb-6">
-            {userType === 'professional' ? 'Grow Your Business' : 'Find Amazing Talent'}
+            {userType === 'photographers' ? 'Grow Your Business' : 'Find Amazing Talent'}
           </h3>
           <p className="text-xl text-purple-100 mb-12 leading-relaxed">
-            {userType === 'professional'
+            {userType === 'photographers'
               ? 'Join our community of verified professionals and start getting more bookings today.'
               : 'Connect with top-rated photographers and videographers for all your needs.'
             }
@@ -520,7 +520,7 @@ function SignupPage({ formData, handleInputChange, showPassword, setShowPassword
             </div>
 
             {/* Professional-specific fields */}
-            {userType === 'professional' && (
+            {userType === 'photographers' && (
               <>
                 <div>
                   <label htmlFor="specialty" className="block text-sm font-medium text-gray-700 mb-2">
@@ -707,7 +707,8 @@ export default function AuthPages() {
     try {
       console.log("Login Data:", formData);
       const response = await axios.post(
-        `${import.meta.env.VITE_ENV === "development" ? import.meta.env.VITE_LOCAL_URL : import.meta.env.VITE_SERVER_URL}/api/v1/photographers/login`,
+
+        `${import.meta.env.VITE_ENV === "development" ? import.meta.env.VITE_LOCAL_URL : import.meta.env.VITE_SERVER_URL}/api/v1/${userType === 'users' ? 'users' : 'photographers'}/login`,
         {
           email: formData.email,
           password: formData.password
