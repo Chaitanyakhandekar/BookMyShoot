@@ -325,7 +325,7 @@ function SignupPage({ formData, handleInputChange, showPassword, setShowPassword
   const navigate = useNavigate();
 
   const handleSignup = async () => {
-    const res = await axios.post(`${import.meta.env.VITE_ENV === "production" ? import.meta.env.VITE_SERVER_URL : import.meta.env.VITE_LOCAL_URL}/api/v1/users/register`, formData);
+    const res = await axios.post(`${import.meta.env.VITE_ENV === "production" ? import.meta.env.VITE_SERVER_URL : import.meta.env.VITE_LOCAL_URL}/api/v1/photographers/register`, formData);
     console.log("Signup Response:", res.data);
   };
 
@@ -707,7 +707,7 @@ export default function AuthPages() {
     try {
       console.log("Login Data:", formData);
       const response = await axios.post(
-        `${import.meta.env.VITE_ENV === "development" ? import.meta.env.VITE_LOCAL_URL : import.meta.env.VITE_SERVER_URL}/api/v1/users/login`,
+        `${import.meta.env.VITE_ENV === "development" ? import.meta.env.VITE_LOCAL_URL : import.meta.env.VITE_SERVER_URL}/api/v1/photographers/login`,
         {
           email: formData.email,
           password: formData.password
