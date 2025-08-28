@@ -325,7 +325,7 @@ function SignupPage({ formData, handleInputChange, showPassword, setShowPassword
   const navigate = useNavigate();
 
   const handleSignup = async () => {
-    const res = await axios.post(`${import.meta.env.VITE_ENV === "production" ? import.meta.env.VITE_SERVER_URL : import.meta.env.VITE_LOCAL_URL}/api/v1/photographers/register`, formData);
+    const res = await axios.post(`${import.meta.env.VITE_ENV === "production" ? import.meta.env.VITE_SERVER_URL : import.meta.env.VITE_LOCAL_URL}/api/v1/users/register`, formData);
     console.log("Signup Response:", res.data);
   };
 
